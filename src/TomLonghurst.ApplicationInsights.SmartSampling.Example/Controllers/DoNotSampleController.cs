@@ -2,7 +2,6 @@
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
-using TomLonghurst.ApplicationInsights.SmartSampling.Wrappers;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Example.Controllers;
 
@@ -27,11 +26,11 @@ public class DoNotSampleController : ControllerBase
     [HttpGet("DoesNotSampleBecauseOfCustomTelemetryType")]
     public IActionResult GetWithDoNotSampleJourneyTelemetryWrapper()
     {
-        _telemetryClient.TrackEvent($"My {GetType().Name} Event that is in the same context of a {nameof(DoNotSampleJourneyTelemetry)} telemetry item");
-        _telemetryClient.TrackTrace($"My {GetType().Name} Trace that is in the same context of a {nameof(DoNotSampleJourneyTelemetry)} telemetry item");
-        _telemetryClient.TrackException(new Exception($"My {GetType().Name} Exception that is in the same context of a {nameof(DoNotSampleJourneyTelemetry)} telemetry item"));
+        _telemetryClient.TrackEvent($"My {GetType().Name} Event that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
+        _telemetryClient.TrackTrace($"My {GetType().Name} Trace that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
+        _telemetryClient.TrackException(new Exception($"My {GetType().Name} Exception that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item"));
         
-        _telemetryClient.Track(new EventTelemetry($"My {GetType().Name} Event that I have wrapped in a {nameof(DoNotSampleJourneyTelemetry)}").ToDoNotSampleJourneyTelemetry());
+        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have called {nameof(TelemetryExtensions.DoNotSampleJourney)} on").DoNotSampleJourney());
 
         return Ok();
     }

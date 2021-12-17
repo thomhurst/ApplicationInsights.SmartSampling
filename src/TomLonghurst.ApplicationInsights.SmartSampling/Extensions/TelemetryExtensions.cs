@@ -1,6 +1,5 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
-using TomLonghurst.ApplicationInsights.SmartSampling.Wrappers;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 
@@ -18,8 +17,9 @@ public static class TelemetryExtensions
         return telemetry;
     }
     
-    public static DoNotSampleJourneyTelemetry ToDoNotSampleJourneyTelemetry<TSamplingTelemetry>(this TSamplingTelemetry telemetry) where TSamplingTelemetry : ITelemetry
+    public static TSamplingTelemetry DoNotSampleJourney<TSamplingTelemetry>(this TSamplingTelemetry telemetry) where TSamplingTelemetry : ITelemetry
     {
-        return new DoNotSampleJourneyTelemetry(telemetry);
+        JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Add(telemetry);
+        return telemetry;
     }
 }
