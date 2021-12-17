@@ -1,5 +1,6 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
+using TomLonghurst.ApplicationInsights.SmartSampling.Wrappers;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 
@@ -15,5 +16,10 @@ public static class TelemetryExtensions
     {
         telemetry.SamplingPercentage = percentage;
         return telemetry;
+    }
+    
+    public static DoNotSampleJourneyTelemetry ToDoNotSampleJourneyTelemetry<TSamplingTelemetry>(this TSamplingTelemetry telemetry) where TSamplingTelemetry : ITelemetry
+    {
+        return new DoNotSampleJourneyTelemetry(telemetry);
     }
 }
