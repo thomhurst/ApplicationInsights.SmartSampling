@@ -4,15 +4,15 @@ using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Helpers;
 
-public class SmartSampling<TTelemetry> where TTelemetry : ITelemetry, ISupportSampling
+public class SmartSamplingTelemetry
 {
-    public static TTelemetry NonSampledTelemetry(TTelemetry telemetry)
+    public static TTelemetry NonSampledTelemetry<TTelemetry>(TTelemetry telemetry) where TTelemetry : ITelemetry, ISupportSampling
     {
         telemetry.DoNotSample();
         return telemetry;
     }
 
-    public static TTelemetry CustomSamplingTelemetry(TTelemetry telemetry, double samplingPercentage)
+    public static TTelemetry CustomSamplingTelemetry<TTelemetry>(TTelemetry telemetry, double samplingPercentage) where TTelemetry : ITelemetry, ISupportSampling
     {
         telemetry.SetSamplingPercentage(samplingPercentage);
         return telemetry;
