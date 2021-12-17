@@ -14,7 +14,7 @@ public class FineToSampleController : ControllerBase
         _telemetryClient = telemetryClient;
     }
 
-    [HttpGet(Name = "FineToSample")]
+    [HttpGet("FineToSample")]
     public IActionResult Get()
     {
         _telemetryClient.TrackEvent($"My {GetType().Name} Event");

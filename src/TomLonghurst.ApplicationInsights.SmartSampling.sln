@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ApplicationIns
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ApplicationInsights.SmartSampling.Example", "TomLonghurst.ApplicationInsights.SmartSampling.Example\TomLonghurst.ApplicationInsights.SmartSampling.Example.csproj", "{3F3D4B28-FF2C-4816-9334-6130340A9C0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomLonghurst.ApplicationInsights.SmartSampling.Example.Pinger", "TomLonghurst.ApplicationInsights.SmartSampling.Example.Pinger\TomLonghurst.ApplicationInsights.SmartSampling.Example.Pinger.csproj", "{AA5DF626-F6C3-4F18-BDE9-85CF8E41CD09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{3F3D4B28-FF2C-4816-9334-6130340A9C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F3D4B28-FF2C-4816-9334-6130340A9C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F3D4B28-FF2C-4816-9334-6130340A9C0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA5DF626-F6C3-4F18-BDE9-85CF8E41CD09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA5DF626-F6C3-4F18-BDE9-85CF8E41CD09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA5DF626-F6C3-4F18-BDE9-85CF8E41CD09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA5DF626-F6C3-4F18-BDE9-85CF8E41CD09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -14,7 +14,7 @@ public class DoNotSampleController : ControllerBase
         _telemetryClient = telemetryClient;
     }
 
-    [HttpGet(Name = "DoNotSample")]
+    [HttpGet("DoNotSample")]
     public IActionResult Get()
     {
         _telemetryClient.TrackEvent($"My {GetType().Name} Event");
@@ -23,7 +23,7 @@ public class DoNotSampleController : ControllerBase
         return Ok();
     }
     
-    [HttpGet(Name = "DoesNotSampleBecauseOfCustomTelemetryType")]
+    [HttpGet("DoesNotSampleBecauseOfCustomTelemetryType")]
     public IActionResult GetWithDoNotSampleJourneyTelemetryWrapper()
     {
         _telemetryClient.TrackEvent($"My {GetType().Name} Event that is in the same context of a {nameof(DoNotSampleJourneyTelemetry)} telemetry item");
