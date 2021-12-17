@@ -2,6 +2,7 @@
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Wrappers;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling;
 
@@ -44,6 +45,9 @@ internal class JourneyCollection
         
         switch (telemetry)
         {
+            case DoNotSampleJourneyTelemetry _:
+                ShouldSample = false;
+                break;
             case DependencyTelemetry dependencyTelemetry:
                 SetFlagBasedOnRules(dependencyTelemetry, _smartSamplingOptions.DependencyDoNotSampleEntireJourneyRules);
                 break;
