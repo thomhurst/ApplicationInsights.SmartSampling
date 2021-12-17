@@ -8,15 +8,7 @@ public class SmartSampling<TTelemetry> where TTelemetry : ITelemetry, ISupportSa
 {
     public static TTelemetry NonSampledTelemetry(TTelemetry telemetry)
     {
-        if (telemetry is ISupportAdvancedSampling supportAdvancedSampling)
-        {
-            supportAdvancedSampling.DoNotSample();
-        }
-        else
-        {
-            telemetry.DoNotSample();
-        }
-        
+        telemetry.DoNotSample();
         return telemetry;
     }
 
