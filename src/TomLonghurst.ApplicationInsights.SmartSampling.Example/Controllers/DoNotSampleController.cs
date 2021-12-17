@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights;
+﻿using System.Reflection;
+using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
@@ -15,22 +16,22 @@ public class DoNotSampleController : ControllerBase
     }
 
     [HttpGet("DoNotSample")]
-    public IActionResult Get()
+    public IActionResult DoNotSample()
     {
-        _telemetryClient.TrackEvent($"My {GetType().Name} Event");
-        _telemetryClient.TrackTrace($"My {GetType().Name} Trace");
-        _telemetryClient.TrackException(new Exception($"My {GetType().Name} Exception"));
+        _telemetryClient.TrackEvent($"My {MethodBase.GetCurrentMethod().Name} Event");
+        _telemetryClient.TrackTrace($"My {MethodBase.GetCurrentMethod().Name} Trace");
+        _telemetryClient.TrackException(new Exception($"My {MethodBase.GetCurrentMethod().Name} Exception"));
         return Ok();
     }
     
     [HttpGet("DoesNotSampleBecauseOfCustomTelemetryType")]
-    public IActionResult GetWithDoNotSampleJourneyTelemetryWrapper()
+    public IActionResult DoesNotSampleBecauseOfCustomTelemetryType()
     {
-        _telemetryClient.TrackEvent($"My {GetType().Name} Event that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
-        _telemetryClient.TrackTrace($"My {GetType().Name} Trace that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
-        _telemetryClient.TrackException(new Exception($"My {GetType().Name} Exception that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item"));
+        _telemetryClient.TrackEvent($"My {MethodBase.GetCurrentMethod().Name} Event that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
+        _telemetryClient.TrackTrace($"My {MethodBase.GetCurrentMethod().Name} Trace that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item");
+        _telemetryClient.TrackException(new Exception($"My {MethodBase.GetCurrentMethod().Name} Exception that is in the same context of a {nameof(TelemetryExtensions.DoNotSampleJourney)} telemetry item"));
         
-        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have called {nameof(TelemetryExtensions.DoNotSampleJourney)} on").DoNotSampleJourney());
+        _telemetryClient.TrackEvent(new EventTelemetry($"My {MethodBase.GetCurrentMethod().Name} Event that I have called {nameof(TelemetryExtensions.DoNotSampleJourney)} on").DoNotSampleJourney());
 
         return Ok();
     }

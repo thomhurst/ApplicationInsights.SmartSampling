@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights;
+﻿using System.Reflection;
+using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
@@ -15,14 +16,14 @@ public class FineToSampleController : ControllerBase
     }
 
     [HttpGet("FineToSample")]
-    public IActionResult Get()
+    public IActionResult FineToSample()
     {
-        _telemetryClient.TrackEvent($"My {GetType().Name} Event");
+        _telemetryClient.TrackEvent($"My {MethodBase.GetCurrentMethod().Name} Event");
         
-        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have over-ridden to never sample").DoNotSample());
-        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have over-ridden to sample 20% of the time").SetSamplingPercentage(20));
+        _telemetryClient.TrackEvent(new EventTelemetry($"My {MethodBase.GetCurrentMethod().Name} Event that I have over-ridden to never sample").DoNotSample());
+        _telemetryClient.TrackEvent(new EventTelemetry($"My {MethodBase.GetCurrentMethod().Name} Event that I have over-ridden to sample 20% of the time").SetSamplingPercentage(20));
 
-        _telemetryClient.TrackTrace($"My {GetType().Name} Trace");
+        _telemetryClient.TrackTrace($"My {MethodBase.GetCurrentMethod().Name} Trace");
         return Ok();
     }
 }
