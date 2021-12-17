@@ -26,17 +26,25 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
 
     public new void Process(ITelemetry item)
     {
-        var operationId = item?.Context?.Operation?.Id;
+        var operationId = item.Context?.Operation?.Id;
         
-        if (item is MetricTelemetry || string.IsNullOrEmpty(operationId))
+        if (string.IsNullOrEmpty(operationId) || item is MetricTelemetry)
         {
             // Metrics should always be sampled!
             // No operation ID? Then we can't tie it to a journey
+            
+            if (JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Contains(item))
+            {
+                JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Remove(item);
+                _skipSamplingTelemetryProcessor.Process(item);
+                return;
+            }
+            
             base.Process(item);
             return;
         }
 
-        var journeyCollection = GetFromCacheOrCreate(operationId);
+        var journeyCollection = GetFromCacheOrCreate(operationId!);
         
         journeyCollection.AddTelemetry(item);
 
@@ -48,15 +56,6 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
         _telemetryMemoryCache.Remove(operationId);
         
         Send(journeyCollection);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        Parallel.ForEach(_telemetryMemoryCache.GetKeys<string>(), key => Send(_telemetryMemoryCache.Get<JourneyCollection>(key)));
-
-        _telemetryMemoryCache.Dispose();
-        
-        base.Dispose(disposing);
     }
 
     private void Send(JourneyCollection journeyCollection)
@@ -71,7 +70,7 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
         }
     }
 
-    private JourneyCollection GetFromCacheOrCreate(string? operationId)
+    private JourneyCollection GetFromCacheOrCreate(string operationId)
     {
         return _telemetryMemoryCache.GetOrCreate(operationId, entry =>
         {
@@ -89,5 +88,17 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
             });
             return collection;
         });
+    }
+
+    public new void Dispose()
+    {
+        foreach (var key in _telemetryMemoryCache.GetKeys<string>())
+        {
+            Send(_telemetryMemoryCache.Get<JourneyCollection>(key));
+        }
+
+        _telemetryMemoryCache.Dispose();
+        
+        base.Dispose();
     }
 }
