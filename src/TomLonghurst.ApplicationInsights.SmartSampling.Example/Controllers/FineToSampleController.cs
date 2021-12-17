@@ -20,7 +20,7 @@ public class FineToSampleController : ControllerBase
         _telemetryClient.TrackEvent($"My {GetType().Name} Event");
         
         _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have over-ridden to never sample").DoNotSample());
-        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have over-ridden to sample 90% of the time").SetSamplingPercentage(90));
+        _telemetryClient.TrackEvent(new EventTelemetry($"My {GetType().Name} Event that I have over-ridden to sample 20% of the time").SetSamplingPercentage(20));
 
         _telemetryClient.TrackTrace($"My {GetType().Name} Trace");
         return Ok();
