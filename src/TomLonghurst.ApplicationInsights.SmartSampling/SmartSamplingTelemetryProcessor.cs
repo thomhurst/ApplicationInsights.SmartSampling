@@ -48,7 +48,7 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
         
         journeyCollection.AddTelemetry(item);
 
-        if (!journeyCollection.RequestFinalized)
+        if (!journeyCollection.JourneyFinished)
         {
             return;
         }

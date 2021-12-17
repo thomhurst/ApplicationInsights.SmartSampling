@@ -6,7 +6,7 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling;
 
 internal class JourneyCollection
 {
-    public bool RequestFinalized { get; private set; }
+    public bool JourneyFinished { get; private set; }
     
     public bool ShouldSample { get; private set; } = true;
     
@@ -26,7 +26,7 @@ internal class JourneyCollection
 
         CheckSampleRules(telemetry);
 
-        RequestFinalized = telemetry is RequestTelemetry;
+        JourneyFinished = telemetry is RequestTelemetry;
     }
 
     private void CheckSampleRules(ITelemetry telemetry)
