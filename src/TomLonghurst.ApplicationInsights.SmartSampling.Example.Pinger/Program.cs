@@ -20,7 +20,7 @@ var stopWatch = Stopwatch.StartNew();
 
 var start = DateTime.UtcNow;
 
-while (DateTime.UtcNow - start < TimeSpan.FromSeconds(30))
+while (DateTime.UtcNow - start < TimeSpan.FromSeconds(10))
 {
     var tasks = new List<Task>();
     for (var i = 0; i < 1000; i++)

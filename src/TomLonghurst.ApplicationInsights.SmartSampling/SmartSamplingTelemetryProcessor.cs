@@ -61,11 +61,14 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
 
     private void Send(JourneyCollection journeyCollection)
     {
-        var telemetryProcessor = journeyCollection.ShouldSample
-            ? this
-            : _skipSamplingTelemetryProcessor;
-        
-        journeyCollection.Send(telemetryProcessor);
+        if (journeyCollection.ShouldSample)
+        {
+            Parallel.ForEach(journeyCollection.Telemetries, base.Process);
+        }
+        else
+        {
+            Parallel.ForEach(journeyCollection.Telemetries, _skipSamplingTelemetryProcessor.Process);
+        }
     }
 
     private JourneyCollection GetFromCacheOrCreate(string? operationId)

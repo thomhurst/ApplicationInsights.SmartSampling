@@ -1,6 +1,5 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.ApplicationInsights.Extensibility;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling;
@@ -14,6 +13,7 @@ internal class JourneyCollection
     private readonly SmartSamplingOptions _smartSamplingOptions;
 
     private List<ITelemetry> _telemetries = new();
+    public List<ITelemetry> Telemetries => Interlocked.Exchange(ref _telemetries, new List<ITelemetry>());
 
     public JourneyCollection(SmartSamplingOptions smartSamplingOptions)
     {
@@ -27,12 +27,6 @@ internal class JourneyCollection
         CheckSampleRules(telemetry);
 
         RequestFinalized = telemetry is RequestTelemetry;
-    }
-
-    public void Send(ITelemetryProcessor telemetryProcessor)
-    {
-        var telemetries = Interlocked.Exchange(ref _telemetries, new List<ITelemetry>());
-        Parallel.ForEach(telemetries, telemetryProcessor.Process);
     }
 
     private void CheckSampleRules(ITelemetry telemetry)
