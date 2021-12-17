@@ -45,27 +45,34 @@ internal class JourneyCollection
         switch (telemetry)
         {
             case DependencyTelemetry dependencyTelemetry:
-                SetFlagBasedOnRules(dependencyTelemetry, _smartSamplingOptions.DependencyNonSamplingRules);
+                SetFlagBasedOnRules(dependencyTelemetry, _smartSamplingOptions.DependencyDoNotSampleEntireJourneyRules);
                 break;
             case EventTelemetry eventTelemetry:
-                SetFlagBasedOnRules(eventTelemetry, _smartSamplingOptions.CustomEventNonSamplingRules);
+                SetFlagBasedOnRules(eventTelemetry, _smartSamplingOptions.CustomEventDoNotSampleEntireJourneyRules);
                 break;
             case ExceptionTelemetry exceptionTelemetry:
-                SetFlagBasedOnRules(exceptionTelemetry, _smartSamplingOptions.ExceptionNonSamplingRules);
+                SetFlagBasedOnRules(exceptionTelemetry, _smartSamplingOptions.ExceptionDoNotSampleEntireJourneyRules);
                 break;
             case PageViewPerformanceTelemetry pageViewPerformanceTelemetry:
-                SetFlagBasedOnRules(pageViewPerformanceTelemetry, _smartSamplingOptions.PageViewPerformanceNonSamplingRules);
+                SetFlagBasedOnRules(pageViewPerformanceTelemetry, _smartSamplingOptions.PageViewPerformanceDoNotSampleEntireJourneyRules);
                 break;
             case PageViewTelemetry pageViewTelemetry:
-                SetFlagBasedOnRules(pageViewTelemetry, _smartSamplingOptions.PageViewNonSamplingRules);
+                SetFlagBasedOnRules(pageViewTelemetry, _smartSamplingOptions.PageViewDoNotSampleEntireJourneyRules);
                 break;
             case RequestTelemetry requestTelemetry:
-                SetFlagBasedOnRules(requestTelemetry, _smartSamplingOptions.RequestNonSamplingRules);
+                SetFlagBasedOnRules(requestTelemetry, _smartSamplingOptions.RequestDoNotSampleEntireJourneyRules);
                 break;
             case TraceTelemetry traceTelemetry:
-                SetFlagBasedOnRules(traceTelemetry, _smartSamplingOptions.TraceNonSamplingRules);
+                SetFlagBasedOnRules(traceTelemetry, _smartSamplingOptions.TraceDoNotSampleEntireJourneyRules);
                 break;
         }
+        
+        if (!ShouldSample)
+        {
+            return;
+        }
+        
+        SetFlagBasedOnRules(telemetry, _smartSamplingOptions.AnyTelemetryTypeDoNotSampleEntireJourneyRules);
     }
 
     private void SetFlagBasedOnRules<TTelemetry>(TTelemetry telemetry, IReadOnlyList<Func<TTelemetry, bool>> rulesForTelemetryType) where TTelemetry : ITelemetry 
