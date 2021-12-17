@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.Channel;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation;
@@ -15,9 +16,19 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
     private readonly ITelemetryProcessor _skipSamplingTelemetryProcessor;
     private readonly MemoryCache _telemetryMemoryCache;
 
+#if DEBUG
+    private static AdaptiveSamplingPercentageEvaluatedCallback _callback =
+        (second, percentage, samplingPercentage, changed, settings) =>
+        {
+            Console.WriteLine($"Second {second} | Percentage {percentage} | SamplingPercentage {samplingPercentage} | Changed {changed} | Settings {settings}");
+        };
+#else
+    private static AdaptiveSamplingPercentageEvaluatedCallback _callback = (second, percentage, samplingPercentage, changed, settings) => {};
+#endif
+    
     public SmartSamplingTelemetryProcessor(SmartSamplingOptions smartSamplingOptions, 
         SamplingPercentageEstimatorSettings percentageEstimatorSettings,
-        ITelemetryProcessor skipSamplingTelemetryProcessor) : base(percentageEstimatorSettings, (second, percentage, samplingPercentage, changed, settings) => {}, skipSamplingTelemetryProcessor)
+        ITelemetryProcessor skipSamplingTelemetryProcessor) : base(percentageEstimatorSettings, _callback, skipSamplingTelemetryProcessor)
     {
         _smartSamplingOptions = smartSamplingOptions;
         _skipSamplingTelemetryProcessor = skipSamplingTelemetryProcessor;
@@ -33,9 +44,8 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
             // Metrics should always be sampled!
             // No operation ID? Then we can't tie it to a journey
             
-            if (JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Contains(item))
+            if (JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.TryRemove(item, out _))
             {
-                JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Remove(item);
                 _skipSamplingTelemetryProcessor.Process(item);
                 return;
             }
@@ -60,14 +70,16 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
 
     private void Send(JourneyCollection journeyCollection)
     {
-        if (journeyCollection.ShouldSample)
-        {
-            Parallel.ForEach(journeyCollection.Telemetries, base.Process);
-        }
-        else
-        {
-            Parallel.ForEach(journeyCollection.Telemetries, _skipSamplingTelemetryProcessor.Process);
-        }
+        var processor = GetProcessor(journeyCollection);
+        Parallel.ForEach(journeyCollection.Telemetries, processor);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private Action<ITelemetry> GetProcessor(JourneyCollection journeyCollection)
+    {
+        return journeyCollection.ShouldSample
+            ? telemetry => base.Process(telemetry)
+            : telemetry => _skipSamplingTelemetryProcessor.Process(telemetry);
     }
 
     private JourneyCollection GetFromCacheOrCreate(string operationId)

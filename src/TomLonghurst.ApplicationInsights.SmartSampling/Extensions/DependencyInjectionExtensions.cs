@@ -13,7 +13,7 @@ public static class DependencyInjectionExtensions
         SamplingPercentageEstimatorSettings? samplingPercentageEstimatorSettings = null)
     {
         var nonNullApplicationInsightOptions = applicationInsightOptions ?? new ApplicationInsightsServiceOptions();
-        nonNullApplicationInsightOptions.EnableAdaptiveSampling = true;
+        nonNullApplicationInsightOptions.EnableAdaptiveSampling = false;
         
         serviceCollection.AddApplicationInsightsTelemetry(nonNullApplicationInsightOptions);
         

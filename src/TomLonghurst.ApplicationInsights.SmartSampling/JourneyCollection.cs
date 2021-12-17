@@ -36,10 +36,9 @@ internal class JourneyCollection
             return;
         }
 
-        if (JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Contains(telemetry))
+        if (JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.TryRemove(telemetry, out _))
         {
             ShouldSample = false;
-            JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Remove(telemetry);
             return;
         }
         

@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
@@ -32,7 +33,8 @@ builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOption
         // If we log a specific event, we want to be able to investigate this journey. E.g. a potential hacking attempt?
         JourneyRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
     }
-}, new ApplicationInsightsServiceOptions { ConnectionString = "InstrumentationKey=473c868c-8fd1-47ba-bbd0-2cafe020fe08;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/" });
+}, new ApplicationInsightsServiceOptions { ConnectionString = "InstrumentationKey=473c868c-8fd1-47ba-bbd0-2cafe020fe08;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/" },
+    new SamplingPercentageEstimatorSettings { InitialSamplingPercentage = 30 });
 
 
 var app = builder.Build();
