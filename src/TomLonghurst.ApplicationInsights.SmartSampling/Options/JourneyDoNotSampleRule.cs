@@ -1,9 +1,8 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.DataContracts;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
-public struct JourneyDoNotSampleRule<TTelemetry> where TTelemetry : ITelemetry, ISupportSampling
+public struct JourneyDoNotSampleRule<TTelemetry> where TTelemetry : ITelemetry
 {
     public Func<TTelemetry, bool> ConditionToNotSampleJourney { get; }
 

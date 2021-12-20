@@ -18,7 +18,7 @@ public static class DependencyInjectionExtensions
         serviceCollection.AddApplicationInsightsTelemetry(nonNullApplicationInsightOptions);
         
         serviceCollection.AddSingleton(samplingPercentageEstimatorSettings ?? new SamplingPercentageEstimatorSettings());
-        serviceCollection.AddSingleton(smartSamplingOptions);
+        serviceCollection.AddSingleton(smartSamplingOptions.MapToInternalModel());
         
         serviceCollection.AddApplicationInsightsTelemetryProcessor<SmartSamplingTelemetryProcessor>();
 

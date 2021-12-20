@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.Channel;
+﻿using System.Collections.Immutable;
+using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
@@ -11,12 +12,12 @@ internal class JourneyCollection
     
     public bool ShouldSample { get; private set; } = true;
     
-    private readonly SmartSamplingOptions _smartSamplingOptions;
+    private readonly InternalSmartSamplingOptions _smartSamplingOptions;
 
     private List<ITelemetry> _telemetries = new();
     public List<ITelemetry> Telemetries => Interlocked.Exchange(ref _telemetries, new List<ITelemetry>());
 
-    public JourneyCollection(SmartSamplingOptions smartSamplingOptions)
+    public JourneyCollection(InternalSmartSamplingOptions smartSamplingOptions)
     {
         _smartSamplingOptions = smartSamplingOptions;
     }
@@ -76,7 +77,7 @@ internal class JourneyCollection
         SetFlagBasedOnRules(telemetry, _smartSamplingOptions.AnyTelemetryTypeDoNotSampleEntireJourneyRules);
     }
 
-    private void SetFlagBasedOnRules<TTelemetry>(TTelemetry telemetry, IReadOnlyList<Func<TTelemetry, bool>> rulesForTelemetryType) where TTelemetry : ITelemetry 
+    private void SetFlagBasedOnRules<TTelemetry>(TTelemetry telemetry, ImmutableArray<Func<TTelemetry, bool>> rulesForTelemetryType) where TTelemetry : ITelemetry 
     {
         if (rulesForTelemetryType.Any(rule => rule(telemetry)))
         {

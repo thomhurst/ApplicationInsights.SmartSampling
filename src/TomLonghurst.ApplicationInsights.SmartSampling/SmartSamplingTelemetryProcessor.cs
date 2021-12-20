@@ -12,11 +12,18 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling;
 
 public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcessor, ITelemetryProcessor, IDisposable
 {
-    private readonly SmartSamplingOptions _smartSamplingOptions;
+    private readonly InternalSmartSamplingOptions _smartSamplingOptions;
     private readonly ITelemetryProcessor _skipSamplingTelemetryProcessor;
     private readonly MemoryCache _telemetryMemoryCache;
 
-    public SmartSamplingTelemetryProcessor(SmartSamplingOptions smartSamplingOptions, 
+    public SmartSamplingTelemetryProcessor(SmartSamplingOptions smartSamplingOptions,
+        SamplingPercentageEstimatorSettings percentageEstimatorSettings,
+        ITelemetryProcessor skipSamplingTelemetryProcessor) : this(smartSamplingOptions.MapToInternalModel(),
+        percentageEstimatorSettings, skipSamplingTelemetryProcessor)
+    {
+    }
+    
+    internal SmartSamplingTelemetryProcessor(InternalSmartSamplingOptions smartSamplingOptions, 
         SamplingPercentageEstimatorSettings percentageEstimatorSettings,
         ITelemetryProcessor skipSamplingTelemetryProcessor) : base(percentageEstimatorSettings, default, skipSamplingTelemetryProcessor)
     {
