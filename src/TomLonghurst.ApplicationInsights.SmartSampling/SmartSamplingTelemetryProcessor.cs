@@ -16,19 +16,9 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
     private readonly ITelemetryProcessor _skipSamplingTelemetryProcessor;
     private readonly MemoryCache _telemetryMemoryCache;
 
-#if DEBUG
-    private static AdaptiveSamplingPercentageEvaluatedCallback _callback =
-        (second, percentage, samplingPercentage, changed, settings) =>
-        {
-            Console.WriteLine($"Second {second} | Percentage {percentage} | SamplingPercentage {samplingPercentage} | Changed {changed} | Settings {settings}");
-        };
-#else
-    private static AdaptiveSamplingPercentageEvaluatedCallback _callback = (second, percentage, samplingPercentage, changed, settings) => {};
-#endif
-    
     public SmartSamplingTelemetryProcessor(SmartSamplingOptions smartSamplingOptions, 
         SamplingPercentageEstimatorSettings percentageEstimatorSettings,
-        ITelemetryProcessor skipSamplingTelemetryProcessor) : base(percentageEstimatorSettings, _callback, skipSamplingTelemetryProcessor)
+        ITelemetryProcessor skipSamplingTelemetryProcessor) : base(percentageEstimatorSettings, default, skipSamplingTelemetryProcessor)
     {
         _smartSamplingOptions = smartSamplingOptions;
         _skipSamplingTelemetryProcessor = skipSamplingTelemetryProcessor;
