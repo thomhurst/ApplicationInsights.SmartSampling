@@ -42,4 +42,20 @@ public static class TelemetryExtensions
         
         return telemetry;
     }
+    
+    public static TSamplingTelemetry AlwaysSample<TSamplingTelemetry>(this TSamplingTelemetry telemetry) where TSamplingTelemetry : ISupportSampling, ITelemetry
+    {
+        telemetry.SamplingPercentage = 100;
+        return telemetry;
+    }
+    
+    public static TSamplingTelemetry AlwaysSampleIf<TSamplingTelemetry>(this TSamplingTelemetry telemetry, Func<TSamplingTelemetry, bool> condition) where TSamplingTelemetry : ISupportSampling, ITelemetry
+    {
+        if (condition(telemetry))
+        {
+            telemetry.AlwaysSample();
+        }
+        
+        return telemetry;
+    }
 }
