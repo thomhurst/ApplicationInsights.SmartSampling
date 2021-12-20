@@ -5,6 +5,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation;
 using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
@@ -31,6 +32,7 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
     {
     }
     
+    [ActivatorUtilitiesConstructor]
     public SmartSamplingTelemetryProcessor(SmartSamplingOptions smartSamplingOptions,
         SamplingPercentageEstimatorSettings percentageEstimatorSettings,
         ITelemetryProcessor skipSamplingTelemetryProcessor) : this(smartSamplingOptions.MapToInternalModel(),
