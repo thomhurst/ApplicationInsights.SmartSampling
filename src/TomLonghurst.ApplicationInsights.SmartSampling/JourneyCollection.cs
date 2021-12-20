@@ -47,25 +47,25 @@ internal class JourneyCollection
         switch (telemetry)
         {
             case DependencyTelemetry dependencyTelemetry:
-                SetFlagBasedOnRules(dependencyTelemetry, _smartSamplingOptions.DependencyDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(dependencyTelemetry, _smartSamplingOptions.DependencyDoNotSampleEntireJourneyRules);
                 break;
             case EventTelemetry eventTelemetry:
-                SetFlagBasedOnRules(eventTelemetry, _smartSamplingOptions.CustomEventDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(eventTelemetry, _smartSamplingOptions.CustomEventDoNotSampleEntireJourneyRules);
                 break;
             case ExceptionTelemetry exceptionTelemetry:
-                SetFlagBasedOnRules(exceptionTelemetry, _smartSamplingOptions.ExceptionDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(exceptionTelemetry, _smartSamplingOptions.ExceptionDoNotSampleEntireJourneyRules);
                 break;
             case PageViewPerformanceTelemetry pageViewPerformanceTelemetry:
-                SetFlagBasedOnRules(pageViewPerformanceTelemetry, _smartSamplingOptions.PageViewPerformanceDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(pageViewPerformanceTelemetry, _smartSamplingOptions.PageViewPerformanceDoNotSampleEntireJourneyRules);
                 break;
             case PageViewTelemetry pageViewTelemetry:
-                SetFlagBasedOnRules(pageViewTelemetry, _smartSamplingOptions.PageViewDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(pageViewTelemetry, _smartSamplingOptions.PageViewDoNotSampleEntireJourneyRules);
                 break;
             case RequestTelemetry requestTelemetry:
-                SetFlagBasedOnRules(requestTelemetry, _smartSamplingOptions.RequestDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(requestTelemetry, _smartSamplingOptions.RequestDoNotSampleEntireJourneyRules);
                 break;
             case TraceTelemetry traceTelemetry:
-                SetFlagBasedOnRules(traceTelemetry, _smartSamplingOptions.TraceDoNotSampleEntireJourneyRules);
+                SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(traceTelemetry, _smartSamplingOptions.TraceDoNotSampleEntireJourneyRules);
                 break;
         }
         
@@ -74,10 +74,10 @@ internal class JourneyCollection
             return;
         }
         
-        SetFlagBasedOnRules(telemetry, _smartSamplingOptions.AnyTelemetryTypeDoNotSampleEntireJourneyRules);
+        SetShouldSampleFlagBasedOnDoNotSampleJourneyRules(telemetry, _smartSamplingOptions.AnyTelemetryTypeDoNotSampleEntireJourneyRules);
     }
 
-    private void SetFlagBasedOnRules<TTelemetry>(TTelemetry telemetry, ImmutableArray<Func<TTelemetry, bool>> rulesForTelemetryType) where TTelemetry : ITelemetry 
+    private void SetShouldSampleFlagBasedOnDoNotSampleJourneyRules<TTelemetry>(TTelemetry telemetry, ImmutableArray<Func<TTelemetry, bool>> rulesForTelemetryType) where TTelemetry : ITelemetry 
     {
         if (rulesForTelemetryType.Any(rule => rule(telemetry)))
         {
