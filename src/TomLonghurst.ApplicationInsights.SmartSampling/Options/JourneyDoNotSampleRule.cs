@@ -17,4 +17,9 @@ public struct JourneyDoNotSampleRule<TTelemetry> where TTelemetry : ITelemetry
     {
         return new JourneyDoNotSampleRule<TTelemetry>(conditionToNotSampleJourney);
     }
+    
+    public static JourneyDoNotSampleRule<TTelemetry> DoNotSampleJourneyIf(string description, Func<TTelemetry, bool> conditionToNotSampleJourney)
+    {
+        return new JourneyDoNotSampleRule<TTelemetry>(conditionToNotSampleJourney);
+    }
 }
