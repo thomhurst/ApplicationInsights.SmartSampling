@@ -19,7 +19,7 @@ public static class TelemetryExtensions
     
     public static TSamplingTelemetry DoNotSampleJourney<TSamplingTelemetry>(this TSamplingTelemetry telemetry) where TSamplingTelemetry : ITelemetry
     {
-        JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.TryAdd(telemetry, default);
+        JourneyTelemetryReferenceContainer.DoNotSampleJourneyTelemetries.Add(telemetry, default);
         return telemetry;
     }
 }

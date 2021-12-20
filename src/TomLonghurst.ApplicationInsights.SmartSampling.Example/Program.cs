@@ -33,8 +33,7 @@ builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOption
         // If we log a specific event, we want to be able to investigate this journey. E.g. a potential hacking attempt?
         JourneyRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
     }
-}, null,
-    new SamplingPercentageEstimatorSettings { InitialSamplingPercentage = 30 });
+});
 
 
 var app = builder.Build();
@@ -56,4 +55,9 @@ await app.StartAsync();
 
 await app.WaitForShutdownAsync();
 
-await app.Services.GetRequiredService<TelemetryClient>().FlushAsync(CancellationToken.None);
+var telemetryClient = app.Services.GetRequiredService<TelemetryClient>();
+
+telemetryClient.TrackEvent(new EventTelemetry("Customer Logged In").DoNotSample());
+telemetryClient.TrackEvent(new EventTelemetry("Hacking Attempt").DoNotSampleJourney());
+
+await telemetryClient.FlushAsync(CancellationToken.None);

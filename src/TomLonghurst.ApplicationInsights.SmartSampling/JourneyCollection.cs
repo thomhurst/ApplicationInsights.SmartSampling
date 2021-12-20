@@ -1,5 +1,6 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
+using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 using TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling;
