@@ -2,7 +2,7 @@
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
-public struct JourneyDoNotSampleRule<TTelemetry> where TTelemetry : ITelemetry
+public class JourneyDoNotSampleRule<TTelemetry> where TTelemetry : ITelemetry
 {
     public Func<TTelemetry, bool> ConditionToNotSampleJourney { get; }
 
