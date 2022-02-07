@@ -68,6 +68,12 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
             return;
         }
 
+        if (HasIndividualDoNotSampleRule(item))
+        {
+            _skipSamplingTelemetryProcessor.Process(item);
+            return;
+        }
+
         var journeyCollection = GetFromCacheOrCreate(operationId!);
         
         journeyCollection.AddTelemetry(item);
@@ -80,6 +86,26 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
         _telemetryMemoryCache.Remove(operationId);
         
         Send(journeyCollection);
+    }
+
+    private bool HasIndividualDoNotSampleRule(ITelemetry item)
+    {
+        if (_smartSamplingOptions.AnyTelemetryTypeDoNotSampleIndividualTelemetryRules.Any(x => x(item)))
+        {
+            return true;
+        }
+
+        return item switch
+        {
+            DependencyTelemetry dependencyTelemetry => _smartSamplingOptions.DependencyDoNotSampleIndividualTelemetryRules.Any(x => x(dependencyTelemetry)),
+            EventTelemetry eventTelemetry => _smartSamplingOptions.CustomEventDoNotSampleIndividualTelemetryRules.Any(x => x(eventTelemetry)),
+            ExceptionTelemetry exceptionTelemetry => _smartSamplingOptions.ExceptionDoNotSampleIndividualTelemetryRules.Any(x => x(exceptionTelemetry)),
+            PageViewPerformanceTelemetry pageViewPerformanceTelemetry => _smartSamplingOptions.PageViewPerformanceDoNotSampleIndividualTelemetryRules.Any(x => x(pageViewPerformanceTelemetry)),
+            PageViewTelemetry pageViewTelemetry => _smartSamplingOptions.PageViewDoNotSampleIndividualTelemetryRules.Any(x => x(pageViewTelemetry)),
+            RequestTelemetry requestTelemetry => _smartSamplingOptions.RequestDoNotSampleIndividualTelemetryRules.Any(x => x(requestTelemetry)),
+            TraceTelemetry traceTelemetry => _smartSamplingOptions.TraceDoNotSampleIndividualTelemetryRules.Any(x => x(traceTelemetry)),
+            _ => false
+        };
     }
 
     private void Send(JourneyCollection journeyCollection)
