@@ -18,11 +18,26 @@ internal static class InternalExtensions
             CustomEventDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Events.UnwrapToImmutableArray(),
             PageViewDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.PageViews.UnwrapToImmutableArray(),
             PageViewPerformanceDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.PageViewPerformance.UnwrapToImmutableArray(),
+            
+            AnyTelemetryTypeDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.GenericTelemetryRules.UnwrapToImmutableArray(),
+            RequestDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.Requests.UnwrapToImmutableArray(),
+            DependencyDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.Dependencies.UnwrapToImmutableArray(),
+            ExceptionDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.Exceptions.UnwrapToImmutableArray(),
+            TraceDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.Traces.UnwrapToImmutableArray(),
+            CustomEventDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.Events.UnwrapToImmutableArray(),
+            PageViewDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.PageViews.UnwrapToImmutableArray(),
+            PageViewPerformanceDoNotSampleIndividualTelemetryRules = smartSamplingOptions.DoNotSampleIndividualTelemetryRules.PageViewPerformance.UnwrapToImmutableArray(),
+            
             SendTelemetryNotLinkedToRequestsAfter = smartSamplingOptions.SendTelemetryNotLinkedToRequestsAfter
         };
     }
 
     private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<JourneyDoNotSampleRule<TTelemetry>> journeyDoNotSampleRule) where TTelemetry : ITelemetry
+    {
+        return journeyDoNotSampleRule.Select(x => x.ConditionToNotSampleJourney).ToImmutableArray();
+    }
+    
+    private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<IndividualTelemetryDoNotSampleRule<TTelemetry>> journeyDoNotSampleRule) where TTelemetry : ITelemetry
     {
         return journeyDoNotSampleRule.Select(x => x.ConditionToNotSampleJourney).ToImmutableArray();
     }

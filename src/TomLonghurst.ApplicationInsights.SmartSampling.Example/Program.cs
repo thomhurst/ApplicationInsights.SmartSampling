@@ -33,6 +33,13 @@ builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOption
             // If we log a specific event, we want to be able to investigate this journey. E.g. a potential hacking attempt?
             JourneyDoNotSampleRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
         }   
+    },
+    DoNotSampleIndividualTelemetryRules =
+    {
+        Events =
+        {
+            IndividualTelemetryDoNotSampleRule<EventTelemetry>.DoNotSampleTelemetryIf(telemetry => telemetry.Name == "LoginAttempt")
+        }
     }
 });
 
