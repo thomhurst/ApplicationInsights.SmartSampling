@@ -15,7 +15,7 @@ internal class JourneyCollection
     private readonly InternalSmartSamplingOptions _smartSamplingOptions;
 
     private List<ITelemetry> _telemetries = new();
-    public List<ITelemetry> Telemetries => Interlocked.Exchange(ref _telemetries, new List<ITelemetry>());
+    public IEnumerable<ITelemetry> Telemetries => Interlocked.Exchange(ref _telemetries, new List<ITelemetry>());
 
     public JourneyCollection(InternalSmartSamplingOptions smartSamplingOptions)
     {
@@ -28,7 +28,10 @@ internal class JourneyCollection
 
         CheckSampleRules(telemetry);
 
-        JourneyFinished = telemetry is RequestTelemetry;
+        if (!JourneyFinished)
+        {
+            JourneyFinished = telemetry is RequestTelemetry;
+        }
     }
 
     private void CheckSampleRules(ITelemetry telemetry)
