@@ -14,22 +14,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOptions
 {
-    RequestDoNotSampleEntireJourneyRules =
+    DoNotSampleEntireJourneyRules =
     {
-        // Keep the whole journey telemetry if: We hit a certain endpoint, or the request is slow, or we hit an internal server error
-        JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Url.AbsolutePath.Contains("DoNotSample")),
-        JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Duration > TimeSpan.FromSeconds(5)),
-        JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.ResponseCode == HttpStatusCode.InternalServerError.ToString() || telemetry.ResponseCode == "500"),
-    },
-    ExceptionDoNotSampleEntireJourneyRules =
-    {
-        // If any exception happens, keep the whole journey for analysis
-        JourneyDoNotSampleRule<ExceptionTelemetry>.DoNotSampleJourneyIf(_ => true)
-    },
-    CustomEventDoNotSampleEntireJourneyRules =
-    {
-        // If we log a specific event, we want to be able to investigate this journey. E.g. a potential hacking attempt?
-        JourneyDoNotSampleRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
+        Requests =
+        {
+            // Keep the whole journey telemetry if: We hit a certain endpoint, or the request is slow, or we hit an internal server error
+            JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Url.AbsolutePath.Contains("DoNotSample")),
+            JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Duration > TimeSpan.FromSeconds(5)),
+            JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.ResponseCode == HttpStatusCode.InternalServerError.ToString() || telemetry.ResponseCode == "500"),
+        },
+        Exceptions =
+        {
+            // If any exception happens, keep the whole journey for analysis
+            JourneyDoNotSampleRule<ExceptionTelemetry>.DoNotSampleJourneyIf(_ => true)
+        },
+        Events =
+        {
+            // If we log a specific event, we want to be able to investigate this journey. E.g. a potential hacking attempt?
+            JourneyDoNotSampleRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
+        }   
     }
 });
 

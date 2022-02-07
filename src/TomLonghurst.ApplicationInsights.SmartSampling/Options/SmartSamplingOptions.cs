@@ -5,21 +5,25 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
 public class SmartSamplingOptions
 {
-    public List<JourneyDoNotSampleRule<ITelemetry>> AnyTelemetryTypeDoNotSampleEntireJourneyRules { get; } = new();
-    
-    public List<JourneyDoNotSampleRule<DependencyTelemetry>> DependencyDoNotSampleEntireJourneyRules { get; } = new();
-
-    public List<JourneyDoNotSampleRule<RequestTelemetry>> RequestDoNotSampleEntireJourneyRules { get; } = new();
-      
-    public List<JourneyDoNotSampleRule<EventTelemetry>> CustomEventDoNotSampleEntireJourneyRules { get; } = new();
-      
-    public List<JourneyDoNotSampleRule<TraceTelemetry>> TraceDoNotSampleEntireJourneyRules { get; } = new();
-      
-    public List<JourneyDoNotSampleRule<ExceptionTelemetry>> ExceptionDoNotSampleEntireJourneyRules { get; } = new();
-    
-    public List<JourneyDoNotSampleRule<PageViewPerformanceTelemetry>> PageViewPerformanceDoNotSampleEntireJourneyRules { get; } = new();
-    
-    public List<JourneyDoNotSampleRule<PageViewTelemetry>> PageViewDoNotSampleEntireJourneyRules { get; } = new();
-    
+    public DoNotSampleEntireJourneyRules DoNotSampleEntireJourneyRules { get; } = new();
     public TimeSpan SendTelemetryNotLinkedToRequestsAfter { get; set; } = TimeSpan.FromMinutes(2);
+}
+
+public class DoNotSampleEntireJourneyRules
+{
+    public List<JourneyDoNotSampleRule<ITelemetry>> GenericTelemetryRules { get; } = new();
+    
+    public List<JourneyDoNotSampleRule<DependencyTelemetry>> Dependencies { get; } = new();
+
+    public List<JourneyDoNotSampleRule<RequestTelemetry>> Requests { get; } = new();
+      
+    public List<JourneyDoNotSampleRule<EventTelemetry>> Events { get; } = new();
+      
+    public List<JourneyDoNotSampleRule<TraceTelemetry>> Traces { get; } = new();
+      
+    public List<JourneyDoNotSampleRule<ExceptionTelemetry>> Exceptions { get; } = new();
+    
+    public List<JourneyDoNotSampleRule<PageViewPerformanceTelemetry>> PageViewPerformance { get; } = new();
+    
+    public List<JourneyDoNotSampleRule<PageViewTelemetry>> PageViews { get; } = new();
 }

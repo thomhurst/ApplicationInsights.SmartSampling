@@ -10,14 +10,14 @@ internal static class InternalExtensions
     {
         return new InternalSmartSamplingOptions
         {
-            AnyTelemetryTypeDoNotSampleEntireJourneyRules = smartSamplingOptions.AnyTelemetryTypeDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            RequestDoNotSampleEntireJourneyRules = smartSamplingOptions.RequestDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            DependencyDoNotSampleEntireJourneyRules = smartSamplingOptions.DependencyDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            ExceptionDoNotSampleEntireJourneyRules = smartSamplingOptions.ExceptionDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            TraceDoNotSampleEntireJourneyRules = smartSamplingOptions.TraceDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            CustomEventDoNotSampleEntireJourneyRules = smartSamplingOptions.CustomEventDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            PageViewDoNotSampleEntireJourneyRules = smartSamplingOptions.PageViewDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
-            PageViewPerformanceDoNotSampleEntireJourneyRules = smartSamplingOptions.PageViewPerformanceDoNotSampleEntireJourneyRules.UnwrapToImmutableArray(),
+            AnyTelemetryTypeDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.GenericTelemetryRules.UnwrapToImmutableArray(),
+            RequestDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Requests.UnwrapToImmutableArray(),
+            DependencyDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Dependencies.UnwrapToImmutableArray(),
+            ExceptionDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Exceptions.UnwrapToImmutableArray(),
+            TraceDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Traces.UnwrapToImmutableArray(),
+            CustomEventDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.Events.UnwrapToImmutableArray(),
+            PageViewDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.PageViews.UnwrapToImmutableArray(),
+            PageViewPerformanceDoNotSampleEntireJourneyRules = smartSamplingOptions.DoNotSampleEntireJourneyRules.PageViewPerformance.UnwrapToImmutableArray(),
             SendTelemetryNotLinkedToRequestsAfter = smartSamplingOptions.SendTelemetryNotLinkedToRequestsAfter
         };
     }
