@@ -7,7 +7,7 @@ Fine tune your sampling rules
 
 ## Installation
 Install via Nuget
-`Install-Package TomLonghurst.EnumerableAsyncProcessor`
+`Install-Package TomLonghurst.ApplicationInsights.SmartSampling`
 
 In your `Startup` class, replace `IServiceCollection.AddApplicationInsights();` with `IServiceCollection.AddApplicationInsightsWithSmartSampling(SmartSamplingOptions)`
 
