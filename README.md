@@ -45,18 +45,18 @@ builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOption
         Requests =
         {
             // Here any telemetry during this entire journey (which shares the same operation ID) would not be sampled if the Request took longer than 5 seconds, or if the Response was an Internal Server Error. This means we can inspect all telemetry for diagnosing problems, but any healthy requests will still be sampled and not consume lots of data, since we don't need to diagnose any problems for those.
-            JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Duration > TimeSpan.FromSeconds(5)),
-            JourneyDoNotSampleRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.ResponseCode == HttpStatusCode.InternalServerError.ToString() || telemetry.ResponseCode == "500"),
+            DoNotSampleJourneyRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Duration > TimeSpan.FromSeconds(5)),
+            DoNotSampleJourneyRule<RequestTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.ResponseCode == HttpStatusCode.InternalServerError.ToString() || telemetry.ResponseCode == "500"),
         },
         Exceptions =
         {
             // If any exception happens, keep the whole journey for analysis
-            JourneyDoNotSampleRule<ExceptionTelemetry>.DoNotSampleJourneyIf(telemetry => true)
+            DoNotSampleJourneyRule<ExceptionTelemetry>.DoNotSampleJourneyIf(telemetry => true)
         },
         Events =
         {
             // If we log a specific event, we might want to be able to investigate this journey. E.g. a potential hacking attempt?
-            JourneyDoNotSampleRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
+            DoNotSampleJourneyRule<EventTelemetry>.DoNotSampleJourneyIf(telemetry => telemetry.Name == "SomeImportantEvent")
         }   
     },
     DoNotSampleIndividualTelemetryRules =
@@ -64,7 +64,7 @@ builder.Services.AddApplicationInsightsWithSmartSampling(new SmartSamplingOption
         Events =
         {
             // This means that only this specific Telemetry item won't be sampled. Other telemetry items during this request may still be sampled. If you wanted to not sample the journey, you should move this rule up into the `DoNotSampleEntireJourneyRules` section
-            IndividualTelemetryDoNotSampleRule<EventTelemetry>.DoNotSampleTelemetryIf(telemetry => telemetry.Name == "LoginAttempt")
+            DoNotSampleIndividualTelemetryRule<EventTelemetry>.DoNotSampleTelemetryIf(telemetry => telemetry.Name == "LoginAttempt")
         }
     }
 });
