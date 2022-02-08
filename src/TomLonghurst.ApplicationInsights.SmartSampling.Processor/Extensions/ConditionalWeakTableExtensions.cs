@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
 public static class ConditionalWeakTableExtensions
 {

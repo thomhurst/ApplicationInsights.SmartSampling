@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
 internal static class MemoryCacheExtensions
 {

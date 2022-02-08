@@ -7,10 +7,10 @@ using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
-using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor;
 
 public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcessor, ITelemetryProcessor, IDisposable
 {

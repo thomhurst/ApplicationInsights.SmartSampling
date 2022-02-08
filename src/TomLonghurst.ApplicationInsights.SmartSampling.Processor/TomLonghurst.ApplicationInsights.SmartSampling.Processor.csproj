@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
+        <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="2.20.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
+        <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TomLonghurst.ApplicationInsights.SmartSampling.Processor.csproj.DotSettings" />
+    </ItemGroup>
+
+</Project>

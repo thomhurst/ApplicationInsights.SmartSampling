@@ -1,4 +1,4 @@
-﻿namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
+﻿namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 public class SmartSamplingOptions
 {

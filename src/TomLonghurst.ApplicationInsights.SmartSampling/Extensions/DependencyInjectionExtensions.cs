@@ -1,7 +1,8 @@
 ﻿using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.WindowsServer.Channel.Implementation;
 using Microsoft.Extensions.DependencyInjection;
-using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
 public static class TelemetryExtensions
 {

@@ -2,7 +2,7 @@
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 internal class InternalSmartSamplingOptions
 {

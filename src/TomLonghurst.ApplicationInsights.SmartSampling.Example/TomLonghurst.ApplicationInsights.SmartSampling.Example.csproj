@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TomLonghurst.ApplicationInsights.SmartSampling\TomLonghurst.ApplicationInsights.SmartSampling.csproj" />
+      <ProjectReference Include="..\TomLonghurst.ApplicationInsights.SmartSampling.Processor\TomLonghurst.ApplicationInsights.SmartSampling.Processor.csproj" />
     </ItemGroup>
 
 </Project>

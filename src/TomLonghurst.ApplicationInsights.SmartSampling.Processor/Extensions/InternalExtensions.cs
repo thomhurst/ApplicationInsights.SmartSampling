@@ -1,8 +1,8 @@
 ﻿using System.Collections.Immutable;
 using Microsoft.ApplicationInsights.Channel;
-using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
 internal static class InternalExtensions
 {

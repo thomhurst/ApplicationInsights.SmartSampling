@@ -2,7 +2,8 @@ using System.Net;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
-using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

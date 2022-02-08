@@ -3,6 +3,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.AspNetCore.Mvc;
 using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Example.Controllers;
 

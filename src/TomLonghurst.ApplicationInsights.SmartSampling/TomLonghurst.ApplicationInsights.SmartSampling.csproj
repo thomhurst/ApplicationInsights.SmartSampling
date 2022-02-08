@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>10</LangVersion>
-        <ImplicitUsings>true</ImplicitUsings>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>TomLonghurst.ApplicationInsights.SmartSampling</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+      <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TomLonghurst.ApplicationInsights.SmartSampling.Processor\TomLonghurst.ApplicationInsights.SmartSampling.Processor.csproj" />
     </ItemGroup>
 
 </Project>

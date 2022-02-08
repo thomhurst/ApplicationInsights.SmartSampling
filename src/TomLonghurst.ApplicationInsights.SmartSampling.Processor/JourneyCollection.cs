@@ -1,10 +1,10 @@
 ﻿using System.Collections.Immutable;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
-using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
-using TomLonghurst.ApplicationInsights.SmartSampling.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
+using TomLonghurst.ApplicationInsights.SmartSampling.Processor.Extensions;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor;
 
 internal class JourneyCollection
 {

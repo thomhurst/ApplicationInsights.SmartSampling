@@ -1,6 +1,6 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 
-namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
+namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 public class DoNotSampleJourneyRule<TTelemetry> where TTelemetry : ITelemetry
 {
