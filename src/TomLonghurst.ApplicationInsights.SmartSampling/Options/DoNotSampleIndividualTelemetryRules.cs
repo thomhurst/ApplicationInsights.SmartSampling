@@ -5,19 +5,19 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
 public class DoNotSampleIndividualTelemetryRules
 {
-    public List<IndividualTelemetryDoNotSampleRule<ITelemetry>> GenericTelemetryRules { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<ITelemetry>> GenericTelemetryRules { get; } = new();
     
-    public List<IndividualTelemetryDoNotSampleRule<DependencyTelemetry>> Dependencies { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<DependencyTelemetry>> Dependencies { get; } = new();
 
-    public List<IndividualTelemetryDoNotSampleRule<RequestTelemetry>> Requests { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<RequestTelemetry>> Requests { get; } = new();
       
-    public List<IndividualTelemetryDoNotSampleRule<EventTelemetry>> Events { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<EventTelemetry>> Events { get; } = new();
       
-    public List<IndividualTelemetryDoNotSampleRule<TraceTelemetry>> Traces { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<TraceTelemetry>> Traces { get; } = new();
       
-    public List<IndividualTelemetryDoNotSampleRule<ExceptionTelemetry>> Exceptions { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<ExceptionTelemetry>> Exceptions { get; } = new();
     
-    public List<IndividualTelemetryDoNotSampleRule<PageViewPerformanceTelemetry>> PageViewPerformance { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<PageViewPerformanceTelemetry>> PageViewPerformance { get; } = new();
     
-    public List<IndividualTelemetryDoNotSampleRule<PageViewTelemetry>> PageViews { get; } = new();
+    public List<DoNotSampleIndividualTelemetryRule<PageViewTelemetry>> PageViews { get; } = new();
 }

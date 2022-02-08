@@ -5,19 +5,19 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling.Options;
 
 public class DoNotSampleEntireJourneyRules
 {
-    public List<JourneyDoNotSampleRule<ITelemetry>> GenericTelemetryRules { get; } = new();
+    public List<DoNotSampleJourneyRule<ITelemetry>> GenericTelemetryRules { get; } = new();
     
-    public List<JourneyDoNotSampleRule<DependencyTelemetry>> Dependencies { get; } = new();
+    public List<DoNotSampleJourneyRule<DependencyTelemetry>> Dependencies { get; } = new();
 
-    public List<JourneyDoNotSampleRule<RequestTelemetry>> Requests { get; } = new();
+    public List<DoNotSampleJourneyRule<RequestTelemetry>> Requests { get; } = new();
       
-    public List<JourneyDoNotSampleRule<EventTelemetry>> Events { get; } = new();
+    public List<DoNotSampleJourneyRule<EventTelemetry>> Events { get; } = new();
       
-    public List<JourneyDoNotSampleRule<TraceTelemetry>> Traces { get; } = new();
+    public List<DoNotSampleJourneyRule<TraceTelemetry>> Traces { get; } = new();
       
-    public List<JourneyDoNotSampleRule<ExceptionTelemetry>> Exceptions { get; } = new();
+    public List<DoNotSampleJourneyRule<ExceptionTelemetry>> Exceptions { get; } = new();
     
-    public List<JourneyDoNotSampleRule<PageViewPerformanceTelemetry>> PageViewPerformance { get; } = new();
+    public List<DoNotSampleJourneyRule<PageViewPerformanceTelemetry>> PageViewPerformance { get; } = new();
     
-    public List<JourneyDoNotSampleRule<PageViewTelemetry>> PageViews { get; } = new();
+    public List<DoNotSampleJourneyRule<PageViewTelemetry>> PageViews { get; } = new();
 }
