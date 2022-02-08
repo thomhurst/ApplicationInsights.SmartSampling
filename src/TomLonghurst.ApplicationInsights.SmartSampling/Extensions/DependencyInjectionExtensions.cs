@@ -8,9 +8,29 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddApplicationInsightsWithSmartSampling(this IServiceCollection serviceCollection,
+        SmartSamplingOptions smartSamplingOptions)
+    {
+        return AddApplicationInsightsWithSmartSampling(serviceCollection, smartSamplingOptions, null, null);
+    }
+    
+    public static IServiceCollection AddApplicationInsightsWithSmartSampling(this IServiceCollection serviceCollection,
         SmartSamplingOptions smartSamplingOptions,
-        ApplicationInsightsServiceOptions? applicationInsightOptions = null,
-        SamplingPercentageEstimatorSettings? samplingPercentageEstimatorSettings = null)
+        SamplingPercentageEstimatorSettings? samplingPercentageEstimatorSettings)
+    {
+        return AddApplicationInsightsWithSmartSampling(serviceCollection, smartSamplingOptions, null, samplingPercentageEstimatorSettings);
+    }
+
+    public static IServiceCollection AddApplicationInsightsWithSmartSampling(this IServiceCollection serviceCollection,
+        SmartSamplingOptions smartSamplingOptions,
+        ApplicationInsightsServiceOptions? applicationInsightOptions)
+    {
+        return AddApplicationInsightsWithSmartSampling(serviceCollection, smartSamplingOptions, applicationInsightOptions, null);
+    }
+
+    public static IServiceCollection AddApplicationInsightsWithSmartSampling(this IServiceCollection serviceCollection,
+        SmartSamplingOptions smartSamplingOptions,
+        ApplicationInsightsServiceOptions? applicationInsightOptions,
+        SamplingPercentageEstimatorSettings? samplingPercentageEstimatorSettings)
     {
         var nonNullApplicationInsightOptions = applicationInsightOptions ?? new ApplicationInsightsServiceOptions();
         nonNullApplicationInsightOptions.EnableAdaptiveSampling = false;

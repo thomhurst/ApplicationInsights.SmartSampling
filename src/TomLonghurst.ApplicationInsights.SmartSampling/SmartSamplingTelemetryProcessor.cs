@@ -130,7 +130,7 @@ public class SmartSamplingTelemetryProcessor : AdaptiveSamplingTelemetryProcesso
             var collection = new JourneyCollection(_smartSamplingOptions);
             entry.PostEvictionCallbacks.Add(new PostEvictionCallbackRegistration
             {
-                EvictionCallback = (key, value, reason, state) =>
+                EvictionCallback = (_, _, reason, _) =>
                 {
                     if (reason == EvictionReason.Expired)
                     {

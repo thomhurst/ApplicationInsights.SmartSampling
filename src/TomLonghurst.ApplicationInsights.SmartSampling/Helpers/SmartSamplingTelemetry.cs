@@ -4,7 +4,7 @@ using TomLonghurst.ApplicationInsights.SmartSampling.Extensions;
 
 namespace TomLonghurst.ApplicationInsights.SmartSampling.Helpers;
 
-public class SmartSamplingTelemetry
+public static class SmartSamplingTelemetry
 {
     public static TTelemetry NonSampledTelemetry<TTelemetry>(TTelemetry telemetry) where TTelemetry : ITelemetry, ISupportSampling
     {
