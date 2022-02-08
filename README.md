@@ -1,37 +1,43 @@
 # ApplicationInsights.SmartSampling
+
 Fine tune your sampling rules
 
 [![nuget](https://img.shields.io/nuget/v/TomLonghurst.ApplicationInsights.SmartSampling.svg)](https://www.nuget.org/packages/TomLonghurst.ApplicationInsights.SmartSampling/)
 [![CodeFactor](https://www.codefactor.io/repository/github/thomhurst/applicationinsights.smartsampling/badge)](https://www.codefactor.io/repository/github/thomhurst/applicationinsights.smartsampling)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e7c443453ee34bf2bda3ca7b370c19a0)](https://www.codacy.com/gh/thomhurst/ApplicationInsights.SmartSampling/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=thomhurst/ApplicationInsights.SmartSampling&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e7c443453ee34bf2bda3ca7b370c19a0)](https://www.codacy.com/gh/thomhurst/ApplicationInsights.SmartSampling/dashboard?utm_source=github.com&utm_medium=referral&utm_content=thomhurst/ApplicationInsights.SmartSampling&utm_campaign=Badge_Grade)
 
 ## Installation
+
 Install via Nuget
 `Install-Package TomLonghurst.ApplicationInsights.SmartSampling`
 
 In your `Startup` class, replace `IServiceCollection.AddApplicationInsights();` with `IServiceCollection.AddApplicationInsightsWithSmartSampling(SmartSamplingOptions)`
 
 ## Behaviour
+
 This library will sample telemetry by default. You then provide it rules to exclude certain telemetry from sampling.
 You can exclude:
-- Specific individual telemetry items
-- Entire journeys based on a certain telemetry item being raised during that journey
+
+-   Specific individual telemetry items
+-   Entire journeys based on a certain telemetry item being raised during that journey
 
 These rules are provided in the `SmartSamplingOptions` object which is passed into the `AddApplicationInsightsWithSmartSampling` call in startup.
 
 There are two sections:
-- `DoNotSampleEntireJourneyRules` - If a rule is hit, any telemetry in that whole journey will not be sampled.
-- `DoNotSampleIndividualTelemetryRules` - If a rule is hit, just that telemetry will not be sampled. Other telemetry in that journey may still be sampled.
+
+-   `DoNotSampleEntireJourneyRules` - If a rule is hit, any telemetry in that whole journey will not be sampled.
+-   `DoNotSampleIndividualTelemetryRules` - If a rule is hit, just that telemetry will not be sampled. Other telemetry in that journey may still be sampled.
 
 Each of these sections can have rules configured for specific telemetry types. This includes:
-- `Dependencies`
-- `Requests`
-- `Events`
-- `Traces`
-- `Exceptions`
-- `PageViewPerformance`
-- `PageViews`
-- `GenericTelemetryRules` - This is a catch all. It can contain any of the other telemetry types.
+
+-   `Dependencies`
+-   `Requests`
+-   `Events`
+-   `Traces`
+-   `Exceptions`
+-   `PageViewPerformance`
+-   `PageViews`
+-   `GenericTelemetryRules` - This is a catch all. It can contain any of the other telemetry types.
 
 The rules are a `Func<TTelemetry, bool>` - So you just provide it a condition, and if the return is `true`, your rule is met.
 
