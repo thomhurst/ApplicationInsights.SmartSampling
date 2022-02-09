@@ -32,13 +32,13 @@ internal static class InternalExtensions
         };
     }
 
-    private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<DoNotSampleJourneyRule<TTelemetry>> journeyDoNotSampleRule) where TTelemetry : ITelemetry
+    private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<DoNotSampleJourneyRule<TTelemetry>> doNotSampleJourneyRules) where TTelemetry : ITelemetry
     {
-        return journeyDoNotSampleRule.Select(x => x.ConditionToNotSampleJourney).ToImmutableArray();
+        return doNotSampleJourneyRules.Select(x => x.ConditionToNotSampleJourney).ToImmutableArray();
     }
     
-    private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<DoNotSampleIndividualTelemetryRule<TTelemetry>> journeyDoNotSampleRule) where TTelemetry : ITelemetry
+    private static ImmutableArray<Func<TTelemetry, bool>> UnwrapToImmutableArray<TTelemetry>(this IEnumerable<DoNotSampleIndividualTelemetryRule<TTelemetry>> doNotSampleIndividualTelemetryRules) where TTelemetry : ITelemetry
     {
-        return journeyDoNotSampleRule.Select(x => x.ConditionToNotSampleJourney).ToImmutableArray();
+        return doNotSampleIndividualTelemetryRules.Select(x => x.ConditionToNotSampleTelemetry).ToImmutableArray();
     }
 }

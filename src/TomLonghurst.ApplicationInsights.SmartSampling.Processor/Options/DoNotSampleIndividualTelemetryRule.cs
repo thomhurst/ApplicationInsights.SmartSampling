@@ -4,13 +4,13 @@ namespace TomLonghurst.ApplicationInsights.SmartSampling.Processor.Options;
 
 public class DoNotSampleIndividualTelemetryRule<TTelemetry> where TTelemetry : ITelemetry
 {
-    public Func<TTelemetry, bool> ConditionToNotSampleJourney { get; }
+    public Func<TTelemetry, bool> ConditionToNotSampleTelemetry { get; }
 
-    public static implicit operator Func<TTelemetry, bool> (DoNotSampleIndividualTelemetryRule<TTelemetry> journeyRule) => journeyRule.ConditionToNotSampleJourney;
+    public static implicit operator Func<TTelemetry, bool> (DoNotSampleIndividualTelemetryRule<TTelemetry> journeyRule) => journeyRule.ConditionToNotSampleTelemetry;
     
-    private DoNotSampleIndividualTelemetryRule(Func<TTelemetry, bool> conditionToNotSampleJourney)
+    private DoNotSampleIndividualTelemetryRule(Func<TTelemetry, bool> conditionToNotSampleTelemetry)
     {
-        ConditionToNotSampleJourney = conditionToNotSampleJourney;
+        ConditionToNotSampleTelemetry = conditionToNotSampleTelemetry;
     }
 
     public static DoNotSampleIndividualTelemetryRule<TTelemetry> DoNotSampleTelemetryIf(Func<TTelemetry, bool> conditionToNotSampleJourney)
